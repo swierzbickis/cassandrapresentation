@@ -1,0 +1,27 @@
+version: '3' 
+
+services:
+  cassandra_db:
+    image: cassandra
+    restart: always
+    ports:
+      - "9042:9042"
+    networks:
+      - cassandra_net
+  
+  cassandraApp:
+    image: wierzbickis/cassandraapp:v.1
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - cassandra_db
+    environment:
+      - SPRING_DATA_CASSANDRA_CONTACT_POINTS=cassandra_db
+      - SPRING_DATA_CASSANDRA_KEYSPACE_NAME=messages_keyspace
+      - SPRING_DATA_CASSANDRA_PORT=9042
+    networks:
+      - cassandra_net
+
+networks:
+  cassandra_net:
