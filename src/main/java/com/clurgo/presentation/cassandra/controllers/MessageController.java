@@ -42,4 +42,11 @@ public class MessageController {
         return new ResponseEntity(message.toString(), HttpStatus.OK);
     }
 
+    @GetMapping("message/{magicNumber}")
+    public @ResponseBody
+    List<Message> findAllMessagesByMagicNumber(@PathVariable Integer magicNumber) {
+        return messageService.findAllMessagesByMagicNumber(magicNumber);
+    }
+
+
 }
