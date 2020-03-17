@@ -64,19 +64,9 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
                 "    primary key(email,id)\n" +
                 ") WITH default_time_to_live = 300;";
 
-        final String createMessageByMagicNumberView = "CREATE MATERIALIZED VIEW IF NOT EXISTS" +
-                " messages_keyspace.message_by_magic_number\n" +
-                "as select * from messages_keyspace.message\n" +
-                "where  magic_number is not null\n" +
-                "and email is not null\n" +
-                "and id is not null\n" +
-                "Primary key(magic_number,email,id);";
-
-
         List<String> startupScripts = new ArrayList<>();
         startupScripts.add(createKeySpaceScript);
         startupScripts.add(createMessageTableScript);
-        startupScripts.add(createMessageByMagicNumberView);
         return startupScripts;
     }
 
